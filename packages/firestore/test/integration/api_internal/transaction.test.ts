@@ -146,7 +146,7 @@ apiDescribe(
       });
     });
 
-    it('handle reading a doc twice with different versions', () => {
+    it.only('handle reading a doc twice with different versions', () => {
       return integrationHelpers.withTestDb(persistence, db => {
         asyncQueue(db).skipDelaysForTimerId(TimerId.TransactionRetry);
         const doc = db.collection('counters').doc();

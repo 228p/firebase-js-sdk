@@ -544,7 +544,7 @@ export class Transaction
     return this;
   }
 
-  delete(documentRef: PublicDocumentReference<any>): Transaction {
+  delete(documentRef: PublicDocumentReference<unknown>): Transaction {
     const ref = castReference(documentRef);
     this._delegate.delete(ref);
     return this;
@@ -1864,25 +1864,6 @@ function castReference<T>(
     documentRef = documentRef._delegate;
   }
   return cast<ExpDocumentReference<T>>(documentRef, ExpDocumentReference);
-}
-
-function validateReference<T>(
-  methodName: string,
-  documentRef: PublicDocumentReference<T>,
-  firestore: Firestore
-): ExpDocumentReference<T> {
-  const reference = cast<ExpDocumentReference<T>>(
-    documentRef,
-    ExpDocumentReference
-  );
-  if (reference.firestore !== firestore._delegate) {
-    throw new FirestoreError(
-      Code.INVALID_ARGUMENT,
-      'Provided document reference is from a different Firestore instance.'
-    );
-  } else {
-    return reference;
-  }
 }
 
 /**
